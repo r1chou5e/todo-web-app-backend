@@ -17,6 +17,19 @@ class UserService {
       updatedUser,
     };
   };
+
+  static changeRole = async (userId, role) => {
+    const updatedUser = await user.findByIdAndUpdate(
+      userId,
+      { user_role: role },
+      { new: true }
+    );
+
+    if (!updatedUser) throw new Error('Cannot change role!');
+    return {
+      updatedUser,
+    };
+  };
 }
 
 module.exports = UserService;

@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.use(authentication);
 router.put('/update', asyncHandler(userController.updateUser));
+router.put('/update/role/:userId', asyncHandler(userController.changeRole));
 
 module.exports = router;
