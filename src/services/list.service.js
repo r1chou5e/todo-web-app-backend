@@ -11,7 +11,7 @@ class ListService {
 
     if (!newList) throw new Error('Cannot create new list!');
     return {
-      list: newList,
+      newList,
     };
   };
 

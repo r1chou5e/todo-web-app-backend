@@ -29,10 +29,12 @@ const taskSchema = new Schema(
     },
     task_user_id: {
       type: Types.ObjectId,
+      required: true,
       ref: 'User',
     },
     task_list_id: {
       type: Types.ObjectId,
+      required: true,
       ref: 'List',
     },
   },

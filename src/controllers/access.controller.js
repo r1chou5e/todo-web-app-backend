@@ -11,7 +11,7 @@ class AccessController {
 
   logIn = async (req, res, next) => {
     const metadata = await AccessService.logIn(req.body);
-    return res.status(201).json({
+    return res.status(200).json({
       message: 'Successful login!',
       metadata,
     });

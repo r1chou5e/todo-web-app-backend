@@ -19,7 +19,7 @@ class AccessService {
 
     if (newUser) {
       return {
-        user: newUser,
+        newUser,
       };
     }
   };

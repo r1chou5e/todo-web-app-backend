@@ -24,6 +24,7 @@ const listSchema = new Schema(
     },
     list_user_id: {
       type: Types.ObjectId,
+      required: true,
       ref: 'User',
     },
   },
