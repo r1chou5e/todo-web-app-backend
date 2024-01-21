@@ -6,5 +6,7 @@ const router = express.Router();
 
 router.use(authentication);
 router.post('/create', asyncHandler(listController.createNewList));
+router.get('/:userId', asyncHandler(listController.getListsByUser));
+router.get('/', asyncHandler(listController.getAllLists));
 
 module.exports = router;

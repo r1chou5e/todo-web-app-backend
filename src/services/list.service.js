@@ -14,6 +14,22 @@ class ListService {
       list: newList,
     };
   };
+
+  static getAllLists = async () => {
+    const allLists = await list.find({}).lean();
+    if (!allLists) throw new Error('Cannot get all list!');
+    return {
+      allLists,
+    };
+  };
+
+  static getListsByUser = async (userId) => {
+    const listsByUser = await list.find({ list_user_id: userId }).lean();
+    if (!listsByUser) throw new Error('Cannot get lists by user');
+    return {
+      listsByUser,
+    };
+  };
 }
 
 module.exports = ListService;
