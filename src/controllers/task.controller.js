@@ -20,6 +20,30 @@ class TaskController {
       metadata,
     });
   };
+
+  updateTask = async (req, res, next) => {
+    const metadata = await TaskService.updateTask(req.params.taskId, req.body);
+    return res.status(200).json({
+      message: 'Success update task!',
+      metadata,
+    });
+  };
+
+  deleteTask = async (req, res, next) => {
+    const metadata = await TaskService.deleteTask(req.params.taskId);
+    return res.status(200).json({
+      message: 'Success delete task!',
+      metadata,
+    });
+  };
+
+  deleteTasksByList = async (req, res, next) => {
+    const metadata = await TaskService.deleteTasksByList(req.params.listId);
+    return res.status(200).json({
+      message: 'Success delete tasks by listId!',
+      metadata,
+    });
+  };
 }
 
 module.exports = new TaskController();

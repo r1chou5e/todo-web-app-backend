@@ -36,6 +36,39 @@ class TaskService {
       tasksByList,
     };
   };
+
+  static deleteTask = async (taskId) => {
+    const deletedTask = await task.findByIdAndDelete(taskId);
+    if (!deletedTask) throw new Error('Cannot delete this task!');
+    return {
+      deletedTask,
+    };
+  };
+
+  static deleteTasksByList = async (listId) => {
+    const deletedTaskByList = await task.deleteMany({ task_list_id: listId });
+    if (!deletedTaskByList)
+      throw new Error('Cannot delete these tasks by listId!');
+    return {
+      deletedTaskByList,
+    };
+  };
+
+  static updateTask = async (taskId, payload) => {
+    const { title, description, duedate, priority, status } = payload;
+    const updatedTask = await task.findByIdAndUpdate(taskId, {
+      task_title: title,
+      task_description: description,
+      task_duedate: duedate,
+      task_priority: priority,
+      task_status: status,
+    });
+
+    if (!updatedTask) throw new Error('Cannot update this task!');
+    return {
+      updatedTask,
+    };
+  };
 }
 
 module.exports = TaskService;
