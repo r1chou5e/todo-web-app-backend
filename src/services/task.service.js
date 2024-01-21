@@ -56,13 +56,17 @@ class TaskService {
 
   static updateTask = async (taskId, payload) => {
     const { title, description, duedate, priority, status } = payload;
-    const updatedTask = await task.findByIdAndUpdate(taskId, {
-      task_title: title,
-      task_description: description,
-      task_duedate: duedate,
-      task_priority: priority,
-      task_status: status,
-    });
+    const updatedTask = await task.findByIdAndUpdate(
+      taskId,
+      {
+        task_title: title,
+        task_description: description,
+        task_duedate: duedate,
+        task_priority: priority,
+        task_status: status,
+      },
+      { new: true }
+    );
 
     if (!updatedTask) throw new Error('Cannot update this task!');
     return {
