@@ -25,7 +25,7 @@ const notificationSchema = new Schema(
     noti_type: {
       type: String,
       enum: ['deadline', 'daily', 'process', 'priority', 'policy'],
-      default: 'daily-remind',
+      default: 'daily',
     },
   },
   {

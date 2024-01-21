@@ -5,7 +5,7 @@ const COLLECTION_NAME = 'Lists';
 
 const listSchema = new Schema(
   {
-    list_name: {
+    list_title: {
       type: String,
       required: true,
     },
@@ -17,7 +17,7 @@ const listSchema = new Schema(
       type: Date,
       default: new Date(),
     },
-    task_status: {
+    list_status: {
       type: String,
       enum: ['incompleted', 'completed'],
       default: 'incompleted',

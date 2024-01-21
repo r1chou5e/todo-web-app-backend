@@ -21,7 +21,7 @@ app.use(
 require('./database/mongodb');
 
 // Routes
-app.use('/', require('./routes'));
+app.use('/api', require('./routes'));
 
 // Error Handling
 app.use((req, res, next) => {
