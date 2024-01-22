@@ -10,6 +10,16 @@ class UserController {
     });
   };
 
+  updateUserByAdmin = async (req, res, next) => {
+    const isAdmin = await checkAdmin(req.user.userId);
+    if (!isAdmin) throw new Error('Not Authorization!');
+    const metadata = await UserService.updateUser(req.params.userId, req.body);
+    return res.status(200).json({
+      message: 'Successful update user!',
+      metadata,
+    });
+  };
+
   changeRole = async (req, res, next) => {
     const isAdmin = await checkAdmin(req.user.userId);
     if (!isAdmin) throw new Error('Not Authorization!');
