@@ -1,4 +1,5 @@
 const { user } = require('../models/user.model');
+const { checkAdmin } = require('../utils/user.util');
 
 class UserService {
   static updateUser = async (userId, payload) => {
@@ -28,6 +29,17 @@ class UserService {
     if (!updatedUser) throw new Error('Cannot change role!');
     return {
       updatedUser,
+    };
+  };
+
+  static deleteUser = async (userId) => {
+    const isAdmin = await checkAdmin(userId);
+    if (isAdmin) throw new Error('Cannot delete admin!');
+
+    const deletedUser = await user.findByIdAndDelete(userId);
+    if (!deletedUser) throw new Error('Cannot delete this user!');
+    return {
+      deletedUser,
     };
   };
 }
