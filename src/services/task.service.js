@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const { list } = require('../models/list.model');
 const { task } = require('../models/task.model');
 
@@ -46,11 +47,22 @@ class TaskService {
   };
 
   static deleteTasksByList = async (listId) => {
+    const tasks = await task.find({ task_list_id: listId });
+    if (tasks.length === 0) throw new Error('Tasks not found!');
+
+    const session = await mongoose.startSession();
+
+    await session.startTransaction();
     const deletedTaskByList = await task.deleteMany({ task_list_id: listId });
-    if (!deletedTaskByList)
-      throw new Error('Cannot delete these tasks by listId!');
+    if (deletedTaskByList.deletedCount !== tasks.length) {
+      await session.abortTransaction();
+      throw new Error('Failed to delete these tasks!');
+    }
+
+    await session.commitTransaction();
+
     return {
-      deletedTaskByList,
+      deletedTaskByList: tasks,
     };
   };
 

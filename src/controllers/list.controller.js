@@ -27,6 +27,14 @@ class ListController {
       metadata,
     });
   };
+
+  deleteList = async (req, res, next) => {
+    const metadata = await ListService.deleteList(req.params.listId);
+    return res.status(200).json({
+      message: 'Successful delete list!!',
+      metadata,
+    });
+  };
 }
 
 module.exports = new ListController();

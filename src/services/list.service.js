@@ -1,4 +1,6 @@
 const { list } = require('../models/list.model');
+const { task } = require('../models/task.model');
+const { deleteTasksByList } = require('./task.service');
 
 class ListService {
   static createNewList = async ({ userId, title, description, duedate }) => {
@@ -28,6 +30,24 @@ class ListService {
     if (!listsByUser) throw new Error('Cannot get lists by user');
     return {
       listsByUser,
+    };
+  };
+
+  static deleteList = async (listId) => {
+    const foundList = await list.findById(listId);
+    if (!foundList) throw new Error('List not found!');
+
+    const tasksByList = await task.find({ task_list_id: listId });
+    let deletedTasks = [];
+    if (tasksByList.length > 0) {
+      deletedTasks = await deleteTasksByList(listId);
+    }
+    const deletedList = await foundList.deleteOne();
+    if (!deletedList.acknowledged) throw new Error('Cannot delete this list!');
+
+    return {
+      deletedList: foundList,
+      deletedTasks: tasksByList,
     };
   };
 }
