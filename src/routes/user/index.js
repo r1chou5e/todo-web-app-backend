@@ -9,5 +9,10 @@ router.put('/update', asyncHandler(userController.updateUser));
 router.put('/update/:userId', asyncHandler(userController.updateUserByAdmin));
 router.put('/update/role/:userId', asyncHandler(userController.changeRole));
 router.delete('/delete/:userId', asyncHandler(userController.deleteUser));
+router.post(
+  '/send-confirmation',
+  asyncHandler(userController.sendEmailConfirmation)
+);
+router.post('/confirm/:token', asyncHandler(userController.confirmEmail));
 
 module.exports = router;

@@ -42,6 +42,22 @@ class UserController {
       metadata,
     });
   };
+
+  sendEmailConfirmation = async (req, res, next) => {
+    const metadata = await UserService.sendEmailConfirmation(req.user.email);
+    return res.status(200).json({
+      message: 'Successful send email confirmation!',
+      metadata,
+    });
+  };
+
+  confirmEmail = async (req, res, next) => {
+    const metadata = await UserService.confirmEmail(req.params.token);
+    return res.status(200).json({
+      message: 'Successful confirm email!',
+      metadata,
+    });
+  };
 }
 
 module.exports = new UserController();
