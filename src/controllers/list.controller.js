@@ -35,6 +35,18 @@ class ListController {
       metadata,
     });
   };
+
+  updateList = async (req, res, next) => {
+    const metadata = await ListService.updateList(
+      req.user.userId,
+      req.params.listId,
+      req.body
+    );
+    return res.status(200).json({
+      message: 'Successful update list!',
+      metadata,
+    });
+  };
 }
 
 module.exports = new ListController();

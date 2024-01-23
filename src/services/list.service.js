@@ -1,5 +1,6 @@
 const { list } = require('../models/list.model');
 const { task } = require('../models/task.model');
+const { checkAdmin } = require('../utils/user.util');
 const { deleteTasksByList } = require('./task.service');
 
 class ListService {
@@ -47,7 +48,29 @@ class ListService {
 
     return {
       deletedList: foundList,
-      deletedTasks: tasksByList,
+      deletedTasks: deletedTasks.deletedTaskByList,
+    };
+  };
+
+  static updateList = async (userId, listId, payload) => {
+    const { title, description, duedate, status } = payload;
+
+    const foundList = await list.findById(listId);
+    if (!foundList) throw new Error('List not found!');
+
+    if (foundList.list_user_id !== userId && !(await checkAdmin(userId)))
+      throw new Error('Not Authorization!');
+
+    const updatedList = await foundList.updateOne({
+      list_title: title,
+      list_description: description,
+      list_duedate: duedate,
+      list_status: status,
+    });
+
+    if (!updatedList) throw new Error('Cannot update this list!');
+    return {
+      updatedList,
     };
   };
 }
